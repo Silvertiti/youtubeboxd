@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.video-thumbnail {
+  display: block;
+  width: 100%; /* Ajuste l'image pour qu'elle occupe toute la largeur disponible */
+  height: auto; /* Conserve l'aspect ratio */
+  border: none;
+  margin: 0;
+  padding: 0;
+}
