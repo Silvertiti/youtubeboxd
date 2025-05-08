@@ -1,21 +1,11 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-}
-
-model User {
-  id           Int       @id @default(autoincrement())
-  username     String    @unique
-  email        String    @unique
-  passwordHash String
-  avatarUrl    String?
-  createdAt    DateTime  @default(now())
-  reviews      Review[]
-  lists        List[]
 }
 
 model Video {
@@ -26,39 +16,4 @@ model Video {
   thumbnailUrl  String
   publishedAt   DateTime?
   createdAt     DateTime  @default(now())
-  reviews       Review[]
-  listItems     ListItem[]
-}
-
-model Review {
-  id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    Int
-  video     Video    @relation(fields: [videoId], references: [id])
-  videoId   Int
-  rating    Int
-  comment   String?
-  createdAt DateTime @default(now())
-
-  @@unique([userId, videoId])
-}
-
-model List {
-  id          Int       @id @default(autoincrement())
-  user        User      @relation(fields: [userId], references: [id])
-  userId      Int
-  title       String
-  description String?
-  isPublic    Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  items       ListItem[]
-}
-
-model ListItem {
-  id        Int      @id @default(autoincrement())
-  list      List     @relation(fields: [listId], references: [id])
-  listId    Int
-  video     Video    @relation(fields: [videoId], references: [id])
-  videoId   Int
-  position  Int?
 }
